@@ -1,75 +1,41 @@
 <?php // callback.php
-/*Get Data From POST Http Request*/
-$datas = file_get_contents('php://input');
-/*Decode Json From LINE Data Body*/
-$deCode = json_decode($datas, true);
 
-file_put_contents('log.txt', file_get_contents('php://input') . PHP_EOL, FILE_APPEND);
+require "vendor/autoload.php";
+require_once('vendor/linecorp/line-bot-sdk/line-bot-sdk-tiny/LINEBotTiny.php');
 
-$replyToken = $deCode['events'][0]['replyToken'];
-$userId = $deCode['events'][0]['source']['userId'];
-$text = $deCode['events'][0]['message']['text'];
+$access_token = 'SBVUX5KIDBH71NagmsyC/e5hSFedMITHLHrONAxXjUDmNOykJjG5C+vvctnaLd4uhvmRIAzD5uLqJmE3AU1x1NUoT7NK1PcucmdtXWYFgRzAes+lB367xc+ZnfyOAn7AF2PjXpcjVe2Ewwp9Nu/nswdB04t89/1O/w1cDnyilFU=';
 
-$messages = [];
-$messages['replyToken'] = $replyToken;
-$messages['messages'][0] = getFormatTextMessage("เอ้ย ถามอะไรก็ตอบได้");
+// Get POST body content
+$content = file_get_contents('php://input');
+// Parse JSON
+$events = json_decode($content, true);
+// Validate parsed JSON data
+if (!is_null($events['events'])) {
+    // Loop through each event
+    foreach ($events['events'] as $event) {
+        // Reply only when message sent is in 'text' format
+        if ($event['type'] == 'message' && $event['message']['type'] == 'text') {
+            // Get text sent
+            $text = $event['source']['userId'];
+            // Get replyToken
+            $replyToken = $event['replyToken'];
 
-$encodeJson = json_encode($messages);
+            if($event['message']['text'] == 'ok'){
+                $ms = 'ok';
+            }else{
+                $ms = 'no';
+            }
 
-$LINEDatas['url'] = "https://api.line.me/v2/bot/message/reply";
-$LINEDatas['token'] = "<YOUR-CHANNEL-ACCESS-TOKEN>";
+            $access_token = 'SBVUX5KIDBH71NagmsyC/e5hSFedMITHLHrONAxXjUDmNOykJjG5C+vvctnaLd4uhvmRIAzD5uLqJmE3AU1x1NUoT7NK1PcucmdtXWYFgRzAes+lB367xc+ZnfyOAn7AF2PjXpcjVe2Ewwp9Nu/nswdB04t89/1O/w1cDnyilFU=';
+            $channelSecret = 'e97b555217c97f5889d0bfd50c6f049e';
+            $idPush = $text;
+            $httpClient = new \LINE\LINEBot\HTTPClient\CurlHTTPClient($access_token);
+            $bot = new \LINE\LINEBot($httpClient, ['channelSecret' => $channelSecret]);
+            $textMessageBuilder = new \LINE\LINEBot\MessageBuilder\TextMessageBuilder($ms);
+            $response = $bot->pushMessage($idPush, $textMessageBuilder);
 
-$results = sentMessage($encodeJson, $LINEDatas);
-
-/*Return HTTP Request 200*/
-http_response_code(200);
-
-function getFormatTextMessage($text)
-{
-    $datas = [];
-    $datas['type'] = 'text';
-    $datas['text'] = $text;
-
-    return $datas;
-}
-
-function sentMessage($encodeJson, $datas)
-{
-    $datasReturn = [];
-    $curl = curl_init();
-    curl_setopt_array($curl, array(
-        CURLOPT_URL => $datas['url'],
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_ENCODING => "",
-        CURLOPT_MAXREDIRS => 10,
-        CURLOPT_TIMEOUT => 30,
-        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-        CURLOPT_CUSTOMREQUEST => "POST",
-        CURLOPT_POSTFIELDS => $encodeJson,
-        CURLOPT_HTTPHEADER => array(
-            "authorization: Bearer " . $datas['token'],
-            "cache-control: no-cache",
-            "content-type: application/json; charset=UTF-8",
-        ),
-    ));
-
-    $response = curl_exec($curl);
-    $err = curl_error($curl);
-
-    curl_close($curl);
-
-    if ($err) {
-        $datasReturn['result'] = 'E';
-        $datasReturn['message'] = $err;
-    } else {
-        if ($response == "{}") {
-            $datasReturn['result'] = 'S';
-            $datasReturn['message'] = 'Success';
-        } else {
-            $datasReturn['result'] = 'E';
-            $datasReturn['message'] = $response;
+            echo $response->getHTTPStatus() . ' ' . $response->getRawBody();
         }
     }
-
-    return $datasReturn;
 }
+echo "OK";
