@@ -3,7 +3,7 @@
 require "vendor/autoload.php";
 require_once('vendor/linecorp/line-bot-sdk/line-bot-sdk-tiny/LINEBotTiny.php');
 
-$access_token = '3gRRrihoNlySOopovVwKXAqLMkHzXzslmg98EjkB1On4rvQ98mzJ4KQba60NVYcFX6YPDcFjByaKpiGNEspEJ2Dqm/KBtqi0Gl/LLAN0ILDerkzEGqwKEuhvEXh5lGqjQxiEKor9Ic+uumDquN/jWwdB04t89/1O/w1cDnyilFU=';
+$access_token = 'SBVUX5KIDBH71NagmsyC/e5hSFedMITHLHrONAxXjUDmNOykJjG5C+vvctnaLd4uhvmRIAzD5uLqJmE3AU1x1NUoT7NK1PcucmdtXWYFgRzAes+lB367xc+ZnfyOAn7AF2PjXpcjVe2Ewwp9Nu/nswdB04t89/1O/w1cDnyilFU=SBVUX5KIDBH71NagmsyC/e5hSFedMITHLHrONAxXjUDmNOykJjG5C+vvctnaLd4uhvmRIAzD5uLqJmE3AU1x1NUoT7NK1PcucmdtXWYFgRzAes+lB367xc+ZnfyOAn7AF2PjXpcjVe2Ewwp9Nu/nswdB04t89/1O/w1cDnyilFU=';
 
 // Get POST body content
 $content = file_get_contents('php://input');
@@ -26,7 +26,7 @@ if (!is_null($events['events'])) {
                 $ms = 'no';
             }
 
-            $access_token = '3gRRrihoNlySOopovVwKXAqLMkHzXzslmg98EjkB1On4rvQ98mzJ4KQba60NVYcFX6YPDcFjByaKpiGNEspEJ2Dqm/KBtqi0Gl/LLAN0ILDerkzEGqwKEuhvEXh5lGqjQxiEKor9Ic+uumDquN/jWwdB04t89/1O/w1cDnyilFU=';
+            $access_token = 'SBVUX5KIDBH71NagmsyC/e5hSFedMITHLHrONAxXjUDmNOykJjG5C+vvctnaLd4uhvmRIAzD5uLqJmE3AU1x1NUoT7NK1PcucmdtXWYFgRzAes+lB367xc+ZnfyOAn7AF2PjXpcjVe2Ewwp9Nu/nswdB04t89/1O/w1cDnyilFU=SBVUX5KIDBH71NagmsyC/e5hSFedMITHLHrONAxXjUDmNOykJjG5C+vvctnaLd4uhvmRIAzD5uLqJmE3AU1x1NUoT7NK1PcucmdtXWYFgRzAes+lB367xc+ZnfyOAn7AF2PjXpcjVe2Ewwp9Nu/nswdB04t89/1O/w1cDnyilFU=';
             $channelSecret = 'e97b555217c97f5889d0bfd50c6f049e';
             $idPush = $text;
             $httpClient = new \LINE\LINEBot\HTTPClient\CurlHTTPClient($access_token);
