@@ -21,13 +21,13 @@ if (!is_null($events['events'])) {
             $replyToken = $event['replyToken'];
 
             if($event['message']['text'] == 'ok'){
-                $ms = 'ok' . $text;
+                $ms = 'ok : ' . $text;
             }else{
                 $ms = '';
             }
 
             $access_token = 'SBVUX5KIDBH71NagmsyC/e5hSFedMITHLHrONAxXjUDmNOykJjG5C+vvctnaLd4uhvmRIAzD5uLqJmE3AU1x1NUoT7NK1PcucmdtXWYFgRzAes+lB367xc+ZnfyOAn7AF2PjXpcjVe2Ewwp9Nu/nswdB04t89/1O/w1cDnyilFU=';
-            $channelSecret = 'e97b555217c97f5889d0bfd50c6f049e';
+            $channelSecret = '7bcd5d3c86b7ff8c282cb094a1a65f48';
             $idPush = $text;
             $httpClient = new \LINE\LINEBot\HTTPClient\CurlHTTPClient($access_token);
             $bot = new \LINE\LINEBot($httpClient, ['channelSecret' => $channelSecret]);
