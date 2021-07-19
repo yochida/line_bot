@@ -23,7 +23,7 @@ if (!is_null($events['events'])) {
             if($event['message']['text'] == 'ok'){
                 $ms = 'ok' . $text;
             }else{
-                $ms = 'no' . $text;
+                // $ms = 'no' . $text;
             }
 
             $access_token = 'SBVUX5KIDBH71NagmsyC/e5hSFedMITHLHrONAxXjUDmNOykJjG5C+vvctnaLd4uhvmRIAzD5uLqJmE3AU1x1NUoT7NK1PcucmdtXWYFgRzAes+lB367xc+ZnfyOAn7AF2PjXpcjVe2Ewwp9Nu/nswdB04t89/1O/w1cDnyilFU=';
